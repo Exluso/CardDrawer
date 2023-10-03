@@ -2,7 +2,6 @@
     --side: 50px;
 }
 
-
 .board {
     display: grid;
     grid-template-rows: 1fr 3fr 1fr;
