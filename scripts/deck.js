@@ -29,8 +29,8 @@ export class Deck {
             picked = Helpers.randBetween(0, pool.length)
             console.log(picked, pool[picked], "top:", top)
             this.cards[card] = pool[picked];
-            pool.splice(picked,1)
-            console.log("pool", pool)
+            pool.splice(picked, 1)
+            console.log("pool:", pool)
         }
     }
 }
