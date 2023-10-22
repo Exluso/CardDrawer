@@ -19,9 +19,6 @@ export class Deck {
     /**Shuffles the card in the deck in a random order */
     reset() {
         let pool = this.createPool()
-
-        console.log("pool", pool)
-
         let top = pool.length, picked
 
         this.cards = [];

@@ -14,6 +14,7 @@
 
 .second{
     grid-row: 2;
+    display:flex;
 }
 
 .third{
@@ -27,4 +28,5 @@
     width: var(--side);
     height: var(--side);
     border: solid black;
+    margin: 0.5rem;
 }
