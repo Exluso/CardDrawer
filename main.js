@@ -11,18 +11,31 @@ document.addEventListener("DOMContentLoaded", (event) =>{
     window.game = game; //makes it accessible from the console! :O
 
     const drawBut = document.querySelector("#drawBut")
+    const discardBoardBut = document.querySelector("#discardBoardBut")
+
     drawBut.addEventListener("click", drawCard);
-    drawBut.deck = game.deck
+    drawBut.game = game;
+
+    discardBoardBut.addEventListener("click", discardBoard);
+    discardBoardBut.game = game;
 
 });
 
 function drawCard(event) {
-    let curDeck = event.currentTarget.deck.cards
+    let game = event.currentTarget.game
+    let curDeck = game.deck.cards
     if (curDeck.length > 0){
-    document.querySelector(".slot>span").innerHTML  = curDeck.shift()
+    document.querySelector(".slot>span").innerHTML  = game.drawCard()
     } else {
         window.alert("Run out of cards")
     }
+}
+
+function discardBoard(event) {
+    let game = event.currentTarget.game
+
+    game.discardAllCards()
+
 }
 
 /**
