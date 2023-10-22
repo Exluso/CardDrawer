@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Card Drawer</title>
         <script src="main.js" type="module"></script>
         <script src="/scripts/deck.js" type="module"></script>
         <link rel="stylesheet" href="styles.css"/>
@@ -10,12 +11,12 @@
     <body>
     <div class="board">
         <h2 class="first">Card Drawer</h2>
-        <div class="second">
-            <div class="slot"><span></span></div>
+        <div id="board" class="second">
         </div>
         <div class="third">
             <button id="drawBut">Draw a card</button>
             <button id="discardBoardBut">Discard board</button>
+            <button id="debugBut">Refresh debug</button>
         </div>
     </div>
     </body>
