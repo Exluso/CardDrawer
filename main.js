@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", (event) =>{
 
     const drawBut = document.querySelector("#drawBut")
     const discardBoardBut = document.querySelector("#discardBoardBut")
-    const debugButton = document.querySelector("#debugBut")
+    const resetButton = document.querySelector("#resetBut")
 
     drawBut.addEventListener("click", drawCard);
     drawBut.game = game;
@@ -20,8 +20,8 @@ document.addEventListener("DOMContentLoaded", (event) =>{
     discardBoardBut.addEventListener("click", discardBoard);
     discardBoardBut.game = game;
 
-    debugButton.addEventListener("click", pageRefresh)
-    debugButton.game = game;
+    resetButton.addEventListener("click", resetDeck)
+    resetButton.game = game;
 });
 
 function drawCard(event) {
@@ -38,6 +38,15 @@ function drawCard(event) {
 function discardBoard(event) {
     let game = event.currentTarget.game;
     game.discardAllCards();
+    pageRefresh(game);
+
+}
+
+function resetDeck(event){
+    const game = event.currentTarget.game;
+    game.deck.reset();
+    game.board = [];
+    game.discardPile = [];
     pageRefresh(game);
 
 }
