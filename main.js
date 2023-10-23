@@ -6,8 +6,6 @@ document.addEventListener("DOMContentLoaded", (event) =>{
     console.log("DOM LOADED")
 
     let game = new Game();
-    console.log("game.deck.cards:", game.deck.cards)
-
     window.game = game; //makes it accessible from the console! :O
 
     const drawBut = document.querySelector("#drawBut")
@@ -53,7 +51,6 @@ function resetDeck(event){
 
 function pageRefresh(game){
 
-    console.debug(game)
     const board_elem = document.querySelector("#board");
     let newSlot;
 
@@ -72,7 +69,9 @@ function pageRefresh(game){
         board_elem.appendChild(newSlot);
         
     }
-    
+
+    game.logMe()
+        
 }
 
 /**
