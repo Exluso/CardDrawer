@@ -9,6 +9,10 @@
     height: calc(3*var(--side));
 }
 
+board-bottom{
+    display: flex;
+}
+
 .buttonbox{
     margin: 1rem;
 }
@@ -36,7 +40,7 @@
 }
 
 .slot {
-    display: inline;
+    display: inline-block;
     justify-content: center;
     align-items: center;
     width: calc(2*var(--side)/3);
