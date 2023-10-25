@@ -1,11 +1,16 @@
 :root{
-    --side: 50px;
+    --side: 150px;
 }
 
 .board {
     display: grid;
     grid-template-rows: 1fr 3fr 1fr;
     width: fit-content;
+    height: calc(3*var(--side));
+}
+
+.buttonbox{
+    margin: 1rem;
 }
 
 .first{
@@ -21,12 +26,24 @@
     grid-row: 3;
 }
 
+.card{
+    color: rgb(13, 90, 235);
+    
+}
+
+.clickable:hover {
+    cursor: pointer;
+}
+
 .slot {
-    display: flex;
+    display: inline;
     justify-content: center;
     align-items: center;
-    width: var(--side);
+    width: calc(2*var(--side)/3);
     height: var(--side);
     border: solid black;
     margin: 0.5rem;
+    font-size: calc(var(--side)*8/10);
+    vertical-align: top;
+    text-align: center;
 }
