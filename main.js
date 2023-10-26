@@ -36,7 +36,6 @@ function drawCard(event) {
         game.drawCard();
         pageRefresh(game);
     } else {
-        //const dialog = document.querySelector("#dialog");
         showDialog("Ran out of cards.")
     }
 }
