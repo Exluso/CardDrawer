@@ -37,6 +37,7 @@ board-bottom{
 
 .clickable:hover {
     cursor: pointer;
+    user-select: none;
 }
 
 .slot {
