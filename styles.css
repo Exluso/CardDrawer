@@ -2,6 +2,12 @@
     --side: 150px;
 }
 
+#dialog{
+    padding: 0.5rem;
+    border-radius: 0.55rem;
+    text-align: center;
+}
+
 .board {
     display: grid;
     grid-template-rows: 1fr 3fr 1fr;
@@ -38,6 +44,10 @@ board-bottom{
 .clickable:hover {
     cursor: pointer;
     user-select: none;
+}
+
+.in-dialog{
+    padding: 0.5rem;
 }
 
 .slot {

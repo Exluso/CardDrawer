@@ -11,7 +11,9 @@ document.addEventListener("DOMContentLoaded", (event) =>{
     const drawBut = document.querySelector("#drawBut")
     const discardBoardBut = document.querySelector("#discardBoardBut")
     const resetButton = document.querySelector("#resetBut")
-
+    const closeBut = document.querySelector("#closeBut")
+    
+    closeBut.addEventListener("click", () => dialog.close());
     drawBut.addEventListener("click", drawCard);
     drawBut.game = game;
 
@@ -20,6 +22,11 @@ document.addEventListener("DOMContentLoaded", (event) =>{
 
     resetButton.addEventListener("click", resetDeck)
     resetButton.game = game;
+
+    // @Debug
+    const debugBut = document.querySelector("#debugBut")
+    debugBut.addEventListener("click", () => { showDialog("Dialog Test")})
+
 });
 
 function drawCard(event) {
@@ -29,7 +36,8 @@ function drawCard(event) {
         game.drawCard();
         pageRefresh(game);
     } else {
-        window.alert("Run out of cards")
+        //const dialog = document.querySelector("#dialog");
+        showDialog("Ran out of cards.")
     }
 }
 
@@ -74,9 +82,14 @@ function pageRefresh(game){
         
 }
 
+function showDialog(msg){
+    document.querySelector(".in-dialog").innerText= msg
+    dialog.showModal() //dialog is a HTML element with Id
+}
+
 /**
  * Merely used for testing events or other process
  */
 function testIt(){
-    console.log("Test successful!")
+    console.log("test it")
 }
