@@ -1,0 +1,23 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "test",
+			"group": "test",
+			"problemMatcher": [],
+			"label": "npm: test",
+			"detail": "none"
+		},
+		{
+			"type": "shell",
+			"label": "gulp in one js file",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"command": "gulp watchJs",
+			"problemMatcher": []
+		}
+	]
+}

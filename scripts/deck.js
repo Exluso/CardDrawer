@@ -1,6 +1,4 @@
-import { Helpers } from "/scripts/helpers.js"
-export let msg ="bello!";
-export class Deck {
+class Deck {
 
     constructor(){
         this.reset()
@@ -24,10 +22,8 @@ export class Deck {
         this.cards = [];
         for (let card = 0; card < top; card++){
             picked = Helpers.randBetween(0, pool.length)
-            //console.debug(picked, pool[picked], "top:", top) // @debug
             this.cards[card] = pool[picked];
             pool.splice(picked, 1)
-            //console.log("pool:", pool) 
         }
     }
 }

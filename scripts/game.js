@@ -1,6 +1,4 @@
-import { Deck } from "/scripts/deck.js";
-
-export class Game {
+class Game {
 
     constructor() {
         this.deck = new Deck()

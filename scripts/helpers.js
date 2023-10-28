@@ -1,4 +1,4 @@
-export class Helpers {
+class Helpers {
     static randBetween(min, max) {
         
         min = Math.ceil(min);

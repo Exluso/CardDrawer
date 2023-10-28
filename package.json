@@ -1,12 +1,8 @@
 {
-  "dependencies": {
-    "gulp": "^4.0.2"
-  },
   "name": "carddrawer",
-  "description": "Draw cards from a 52 card deck and display them on screen (learning project).",
   "version": "1.0.0",
+  "description": "Emulate drawing cards from a deck of 52",
   "main": "main.js",
-  "devDependencies": {},
   "scripts": {
     "test": "none"
   },
@@ -16,6 +12,7 @@
   },
   "keywords": [
     "cards",
+    "gulp?",
     "learn"
   ],
   "author": "Gia",
@@ -23,5 +20,13 @@
   "bugs": {
     "url": "https://github.com/Exluso/CardDrawer/issues"
   },
-  "homepage": "https://github.com/Exluso/CardDrawer#readme"
+  "homepage": "https://github.com/Exluso/CardDrawer#readme",
+  "dependencies": {
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1"
+  },
+  "overrides": {
+    "chokidar": "3.5.2",
+    "glob-parent": "6.0.2"
+  }
 }
