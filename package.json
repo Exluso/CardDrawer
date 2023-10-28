@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "gulp": "^4.0.2"
+  },
+  "name": "carddrawer",
+  "description": "Draw cards from a 52 card deck and display them on screen (learning project).",
+  "version": "1.0.0",
+  "main": "main.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "none"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Exluso/CardDrawer.git"
+  },
+  "keywords": [
+    "cards",
+    "learn"
+  ],
+  "author": "Gia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Exluso/CardDrawer/issues"
+  },
+  "homepage": "https://github.com/Exluso/CardDrawer#readme"
+}
