@@ -101,11 +101,16 @@ document.addEventListener("DOMContentLoaded", (event) =>{
     discardBoardBut.game = game;
 
     resetButton.addEventListener("click", () => {
-        showDialog(game.msg.resetConfirmation, {
-            msg: game.msg.reset_button,
-            cb: resetGame,
-            game: game,
-        })
+        if (game.board.length > 0) {
+            game.discardAllCards();
+            pageRefresh(game);
+        } else {
+            showDialog(game.msg.resetConfirmation, {
+                msg: game.msg.reset_button,
+                cb: resetGame,
+                game: game,
+            })
+        }
 
     })
     resetButton.game = game;
