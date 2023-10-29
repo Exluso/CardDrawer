@@ -4,6 +4,11 @@ class Game {
         this.deck = new Deck()
         this.board = []
         this.discardPile = []
+        this.msg = {
+            reset_button: "Shuffle",
+            resetConfirmation: "Are you sure you want to shuffle the deck?",
+            debugTest: "Debug Test",
+        }
     }
 
     drawCard(){

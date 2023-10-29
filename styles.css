@@ -36,7 +36,7 @@ board-bottom{
     grid-row: 3;
 }
 
-.card{
+.card-back{
     color: rgb(13, 90, 235);
     
 }
@@ -44,8 +44,14 @@ board-bottom{
 .clickable:hover {
     cursor: pointer;
     user-select: none;
+    border: solid yellowgreen;
 }
 
+.debug {
+    border: solid red;
+    padding: 1rem;
+    margin-top: 3rem;
+}
 .in-dialog{
     padding: 0.5rem;
 }

@@ -9,19 +9,35 @@ document.addEventListener("DOMContentLoaded", (event) =>{
     const resetButton = document.querySelector("#resetBut")
     const closeBut = document.querySelector("#closeBut")
     
-    closeBut.addEventListener("click", () => dialog.close());
+    closeBut.addEventListener("click", hideDialog);
+
     drawBut.addEventListener("click", drawCard);
     drawBut.game = game;
 
     discardBoardBut.addEventListener("click", discardBoard);
     discardBoardBut.game = game;
 
-    resetButton.addEventListener("click", resetDeck)
+    resetButton.addEventListener("click", () => {
+        showDialog(game.msg.resetConfirmation, {
+            msg: game.msg.reset_button,
+            cb: resetGame,
+            game: game,
+        })
+
+    })
     resetButton.game = game;
 
     // @Debug
+    let resetBut_data = {
+        msg: game.msg.reset_button,
+        game: game,
+        cb: resetGame,
+    };
+
     const debugBut = document.querySelector("#debugBut")
-    debugBut.addEventListener("click", () => { showDialog("Dialog Test")})
+    debugBut.addEventListener("click", () => { 
+        showDialog("Dialog Test", resetBut_data)
+    })
 
 });
 
@@ -43,12 +59,13 @@ function discardBoard(event) {
 
 }
 
-function resetDeck(event){
+function resetGame(event){
     const game = event.currentTarget.game;
     game.deck.reset();
     game.board = [];
     game.discardPile = [];
     pageRefresh(game);
+    hideDialog();
 
 }
 
@@ -77,9 +94,26 @@ function pageRefresh(game){
         
 }
 
-function showDialog(msg){
+function showDialog(msg, button1 = false){
     document.querySelector(".in-dialog").innerText= msg
-    dialog.showModal() //dialog is a HTML element with Id
+    dialog.showModal() //dialog is a HTML element with Id= "dialog"!
+
+    if (!button1) return
+
+    butt_1 = document.createElement("button")
+    butt_1.setAttribute("id", "butt_1");
+    butt_1.game = button1.game
+    dialog.insertBefore(butt_1, closeBut)
+
+    butt_1.innerText = button1.msg;
+    butt_1.addEventListener("click", button1.cb);
+
+
+}
+
+function hideDialog(){
+    dialog.close()
+    dialog.removeChild(butt_1)
 }
 
 /**
@@ -88,5 +122,3 @@ function showDialog(msg){
 function testIt(){
     console.log("test it")
 }
-
-//main_b.js end
