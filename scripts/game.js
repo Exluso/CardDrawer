@@ -19,10 +19,15 @@ class Game {
         return targetCard;
     }
 
+    /**
+     * Moves the last card of the board to the discard pile.
+     */
     discardCard(){
         console.log("GIA: this is game.discardCard");
+        console.log("DEBUG | GIA | this:", this) //@debug 
         let targetCard = this.board.pop();
         this.discardPile.push(targetCard);
+        renderBoard(game);
 
     }
 

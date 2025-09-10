@@ -15,17 +15,22 @@
 
     <div class="board">
         <h2 class="first">Card Drawer</h2>
-        <div id="board" class="second">
+        <div class="second">
+            <div id="main-line" class="card-line"> </div>
+            <div id="secondary-line" class="card-line"> </div>
+            <button class="clickable discardCard">Discard last</button>
         </div>
         <div class="third">
             <div class="board-bottom"> 
                 <div class="slot card-back clickable" id="drawBut" title="Draw a card">&#x1F0A0;</div>
-                <div class="slot card clickable" id="resetBut" title="Shuffle the deck" >D</div>
+                <div class="slot card-back clickable" id="resetBut" title="Shuffle the deck" >D</div>
             </div>
         </div>
+        <div>
         <div class="debug">
             <button id="discardBoardBut">Discard board</button>
             <button id="debugBut">Debug Button</button>
+        </div>
         </div>
     </div>
     </body>

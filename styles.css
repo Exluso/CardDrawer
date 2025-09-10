@@ -1,5 +1,6 @@
 :root{
     --side: 150px;
+    --debug-color: purple;
 }
 
 #dialog{
@@ -15,7 +16,7 @@
     height: calc(3*var(--side));
 }
 
-board-bottom{
+.board-bottom{
     display: flex;
 }
 
@@ -29,16 +30,26 @@ board-bottom{
 
 .second{
     grid-row: 2;
-    display:flex;
+    min-height: calc(var(--side)*2 + 32px);
 }
 
 .third{
     grid-row: 3;
+    margin-top: calc(var(--side)/3);
 }
 
 .card-back{
     color: rgb(13, 90, 235);
-    
+    font-size: calc(var(--side)*8/10);
+}
+
+.card-front{
+    color: var(--debug-color);
+    font-size: calc(var(--side)*6/10);
+}
+
+.card-line{
+    display: flex;
 }
 
 .clickable:hover {
@@ -48,23 +59,23 @@ board-bottom{
 }
 
 .debug {
-    border: solid red;
+    display: inline-block;
+    border: solid var(--debug-color);
     padding: 1rem;
     margin-top: 3rem;
 }
+
 .in-dialog{
     padding: 0.5rem;
 }
 
 .slot {
-    display: inline-block;
-    justify-content: center;
+    display: flex;
+    justify-content: space-around;
     align-items: center;
     width: calc(2*var(--side)/3);
     height: var(--side);
     border: solid black;
     margin: 0.5rem;
-    font-size: calc(var(--side)*8/10);
-    vertical-align: top;
     text-align: center;
 }
