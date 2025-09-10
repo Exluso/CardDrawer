@@ -224,7 +224,7 @@ function showDialog(msg, button1 = false){
     butt_1 = document.createElement("button")
     butt_1.setAttribute("id", "butt_1");
     butt_1.game = button1.game
-    dialog.insertBefore(butt_1, closeBut)
+    dialog.insertBefore(butt_1, CloseBut)
 
     butt_1.innerText = button1.msg;
     butt_1.addEventListener("click", button1.cb);
