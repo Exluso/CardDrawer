@@ -2,7 +2,10 @@ class Game {
 
     constructor() {
         this.deck = new Deck()
-        this.board = []
+        this.board = {
+            mainLine: [],
+            secondaryLine: []
+        },
         this.discardPile = []
         this.msg = {
             reset_button: "Shuffle",
@@ -14,7 +17,7 @@ class Game {
     drawCard(){
         console.log("GIA: this is game.drawCard");
         let targetCard = this.deck.cards.pop();
-        this.board.push(targetCard);
+        this.board.mainLine.push(targetCard);
 
         return targetCard;
     }
@@ -44,4 +47,15 @@ class Game {
         console.log("game.board:", this.board);
         console.log("game.discard:", this.discardPile);
     }
+
+
+    async debugfunc(){
+            console.log("DEBUG | GIA |DELETE THIS Method ") //@debug 
+        let a = "mainLine"
+        let res;
+
+        res = await Helpers.convertLineToHtmlId(a);
+        console.log("DEBUG | GIA | res debugfunc", res) //@debug 
+    }
+
 }

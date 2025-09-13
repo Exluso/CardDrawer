@@ -102,29 +102,35 @@ function resetGame(event){
 
 }
 
+/**
+ * Renders the board, ie the rows where cards are revealed
+ */
 function renderBoard(game){
+    const lines = Object.keys(game.board);
+    console.log("DEBUG | GIA | renderBoard lines", lines) //@debug 
 
-    const board_elem = document.querySelector("#main-line");
-    let newSlot;
+    for (let curLine of lines ) {
+        let lineId = Helpers.convertLineToHtmlId(curLine);
+        const board_elem = document.querySelector(lineId);
+        let newSlot;
 
-    //Remove elements
-    while (board_elem.firstChild) {
-        board_elem.removeChild(board_elem.firstChild);
-    }
+        //Remove line elements
+        while (board_elem.firstChild) {
+            board_elem.removeChild(board_elem.firstChild);
+        }
 
-    if (!game.board.length) return
+        if (!game.board[curLine].length) return
 
-    //Add new elements
-    for (let card = 0; card < game.board.length; card++) {
-        newSlot = document.createElement("div");
-        newSlot.classList.add("slot", "card-front");
-        newSlot.innerHTML = game.board[card];
-        board_elem.appendChild(newSlot);
-        
-    }
+        //Add line elements
+        for (let card = 0; card < game.board[curLine].length; card++) {
+            newSlot = document.createElement("div");
+            newSlot.classList.add("slot", "card-front");
+            newSlot.innerHTML = game.board[curLine][card];
+            board_elem.appendChild(newSlot);
+        }
 
-    game.logMe()
-        
+        game.logMe()
+    }  
 }
 
 function showDialog(msg, button1 = false){

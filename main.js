@@ -32,7 +32,10 @@ class Game {
 
     constructor() {
         this.deck = new Deck()
-        this.board = []
+        this.board = {
+            mainLine: [],
+            secondaryLine: []
+        },
         this.discardPile = []
         this.msg = {
             reset_button: "Shuffle",
@@ -44,7 +47,7 @@ class Game {
     drawCard(){
         console.log("GIA: this is game.drawCard");
         let targetCard = this.deck.cards.pop();
-        this.board.push(targetCard);
+        this.board.mainLine.push(targetCard);
 
         return targetCard;
     }
@@ -74,6 +77,17 @@ class Game {
         console.log("game.board:", this.board);
         console.log("game.discard:", this.discardPile);
     }
+
+
+    async debugfunc(){
+            console.log("DEBUG | GIA |DELETE THIS Method ") //@debug 
+        let a = "mainLine"
+        let res;
+
+        res = await Helpers.convertLineToHtmlId(a);
+        console.log("DEBUG | GIA | res debugfunc", res) //@debug 
+    }
+
 }
 
 class Helpers {
@@ -83,6 +97,26 @@ class Helpers {
         max = Math.floor(max);
         return Math.floor(Math.random() * (max - min) + min)
         
+    }
+
+    /**
+     * converts camelcase to HTML hyphenated ID
+     * @param {string} lineName a camelCase property name
+     * @returns an hyphenated HTML ID name
+     */
+    static convertLineToHtmlId(lineName) {
+        //console.log("DEBUG | GIA | ConvertLinestoHtmlID") //@debug
+        let res = "";
+ 
+        for (let l of lineName) {
+            if (/[A-Z]/.test(l)) {
+                res = `${res}-` + l.toLowerCase()
+            } else {
+                res = res + l
+            }
+        }
+        res = "#" + res
+        return res
     }
 }
 
@@ -190,29 +224,35 @@ function resetGame(event){
 
 }
 
+/**
+ * Renders the board, ie the rows where cards are revealed
+ */
 function renderBoard(game){
+    const lines = Object.keys(game.board);
+    console.log("DEBUG | GIA | renderBoard lines", lines) //@debug 
 
-    const board_elem = document.querySelector("#main-line");
-    let newSlot;
+    for (let curLine of lines ) {
+        let lineId = Helpers.convertLineToHtmlId(curLine);
+        const board_elem = document.querySelector(lineId);
+        let newSlot;
 
-    //Remove elements
-    while (board_elem.firstChild) {
-        board_elem.removeChild(board_elem.firstChild);
-    }
+        //Remove line elements
+        while (board_elem.firstChild) {
+            board_elem.removeChild(board_elem.firstChild);
+        }
 
-    if (!game.board.length) return
+        if (!game.board[curLine].length) return
 
-    //Add new elements
-    for (let card = 0; card < game.board.length; card++) {
-        newSlot = document.createElement("div");
-        newSlot.classList.add("slot", "card-front");
-        newSlot.innerHTML = game.board[card];
-        board_elem.appendChild(newSlot);
-        
-    }
+        //Add line elements
+        for (let card = 0; card < game.board[curLine].length; card++) {
+            newSlot = document.createElement("div");
+            newSlot.classList.add("slot", "card-front");
+            newSlot.innerHTML = game.board[curLine][card];
+            board_elem.appendChild(newSlot);
+        }
 
-    game.logMe()
-        
+        game.logMe()
+    }  
 }
 
 function showDialog(msg, button1 = false){
