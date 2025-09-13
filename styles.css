@@ -30,7 +30,8 @@
 
 .second{
     grid-row: 2;
-    min-height: calc(var(--side)*2 + 32px);
+    display: grid;
+    grid-template-columns: 1fr 80px;
 }
 
 .third{
@@ -50,6 +51,7 @@
 
 .card-line{
     display: flex;
+    min-height: calc(var(--side) + 1.4rem);
 }
 
 .clickable:hover {
@@ -69,13 +71,17 @@
     padding: 0.5rem;
 }
 
+.line-side-wrapper {
+    padding: 0.5rem 0;
+}
+
 .slot {
     display: flex;
     justify-content: space-around;
     align-items: center;
     width: calc(2*var(--side)/3);
     height: var(--side);
-    border: solid black;
+    border: 0.2rem solid black;
     margin: 0.5rem;
     text-align: center;
 }

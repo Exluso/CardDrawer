@@ -4,22 +4,24 @@ document.addEventListener("DOMContentLoaded", (event) =>{
     let game = new Game();
     window.game = game; //makes it accessible from the console! :O
 
-    const drawBut = document.querySelector("#drawBut");
+    const refreshBut = document.querySelector("#refresh"); //@debug
+    const drawButtons = document.querySelectorAll(".drawButton");
     const discardCardElems = document.querySelectorAll(".discardCard");
-    const discardBoardBut = document.querySelector("#discardBoardBut");
+    const discardBoardBut = document.querySelector("#discardBoardBut"); //@debug
+    const logButton = document.querySelector("#logGame"); //@debug 
     const resetButton = document.querySelector("#resetBut");
     const dialCloseBut = document.querySelector("#closeBut");
     
     dialCloseBut.addEventListener("click", hideDialog);
-
-    drawBut.addEventListener("click", drawCard);
-    drawBut.game = game;
-
+    refreshBut.addEventListener("click", debugRenderBoard);
+    drawButtons.forEach( function(e) {
+        e.addEventListener("click", drawCard);
+        e.game = game;
+    })
     discardCardElems.forEach( function(e) {
         e.addEventListener("click", discardCard)
         e.game = game
     })
-
     discardBoardBut.addEventListener("click", discardBoard);
     discardBoardBut.game = game;
 
@@ -34,9 +36,10 @@ document.addEventListener("DOMContentLoaded", (event) =>{
                 game: game,
             })
         }
-
     })
     resetButton.game = game;
+    logButton.addEventListener("click", debugLogGame)
+    logButton.game = game;
 
     // @Debug
     let resetBut_data = {
@@ -57,12 +60,11 @@ document.addEventListener("DOMContentLoaded", (event) =>{
  * @param {event} event that triggered the listener
  */
 function drawCard(event) {
-    console.log("DEBUG | GIA | Main drawCard") //@debug
-    console.log("DEBUG | GIA | event:", event) //@debug
+    //console.log("DEBUG | GIA | Main drawCard") //@debug
     let game = event.currentTarget.game
     let curDeck = game.deck.cards
     if (curDeck.length > 0){
-        game.drawCard();
+        game.drawCard(event.target.dataset.drawTo);
         renderBoard(game);
     } else {
         showDialog("Ran out of cards.")
@@ -74,9 +76,9 @@ function drawCard(event) {
  * @param {*} event that triggered the listener
  */
 function discardCard(event) {
-    console.log("DEBUG | GIA | Main discardCard") //@debug 
-    console.log("DEBUG | GIA | event:", event) //@debug
-    game.discardCard();
+    //console.log("DEBUG | GIA | Main discardCard") //@debug 
+    let targetLine = event.target.closest(".line-side-wrapper").dataset.line
+    game.discardCard(targetLine);
     renderBoard(game);
 
 }
@@ -92,10 +94,20 @@ function discardBoard(event) {
 
 }
 
+/**
+ * force the rendering of the board for debug purposese
+ */
+function debugRenderBoard(){
+    renderBoard(game);
+}
+
 function resetGame(event){
     const game = event.currentTarget.game;
     game.deck.reset();
-    game.board = [];
+    game.board = {
+        mainLine: [],
+        secondaryLine: []
+    };
     game.discardPile = [];
     renderBoard(game);
     hideDialog();
@@ -106,8 +118,8 @@ function resetGame(event){
  * Renders the board, ie the rows where cards are revealed
  */
 function renderBoard(game){
+    //console.log("DEBUG | GIA | this is renderBoard") //@debug 
     const lines = Object.keys(game.board);
-    console.log("DEBUG | GIA | renderBoard lines", lines) //@debug 
 
     for (let curLine of lines ) {
         let lineId = Helpers.convertLineToHtmlId(curLine);
@@ -119,7 +131,7 @@ function renderBoard(game){
             board_elem.removeChild(board_elem.firstChild);
         }
 
-        if (!game.board[curLine].length) return
+        if (!game.board[curLine].length) continue
 
         //Add line elements
         for (let card = 0; card < game.board[curLine].length; card++) {
@@ -142,17 +154,21 @@ function showDialog(msg, button1 = false){
     butt_1 = document.createElement("button")
     butt_1.setAttribute("id", "butt_1");
     butt_1.game = button1.game
-    dialog.insertBefore(butt_1, CloseBut)
+    dialog.insertBefore(butt_1, closeBut)
 
     butt_1.innerText = button1.msg;
     butt_1.addEventListener("click", button1.cb);
-
 
 }
 
 function hideDialog(){
     dialog.close()
-    dialog.removeChild(butt_1)
+    if (dialog.contains(butt_1)) dialog.removeChild(butt_1)
+}
+
+function debugLogGame(event){
+    let game = event.currentTarget.game;
+    game.logMe();
 }
 
 /**
