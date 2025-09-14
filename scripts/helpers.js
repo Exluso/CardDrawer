@@ -13,7 +13,6 @@ class Helpers {
      * @returns an hyphenated HTML ID name
      */
     static convertLineToHtmlId(lineName) {
-        //console.log("DEBUG | GIA | ConvertLinestoHtmlID") //@debug
         let res = "";
  
         for (let l of lineName) {

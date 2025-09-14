@@ -4,11 +4,12 @@ document.addEventListener("DOMContentLoaded", (event) =>{
     let game = new Game();
     window.game = game; //makes it accessible from the console! :O
 
-    const refreshBut = document.querySelector("#refresh"); //@debug
+    const refreshBut = document.querySelector("#refresh"); //debug box
+     const logButton = document.querySelector("#logGame"); //debug box 
     const drawButtons = document.querySelectorAll(".drawButton");
     const discardCardElems = document.querySelectorAll(".discardCard");
-    const discardBoardBut = document.querySelector("#discardBoardBut"); //@debug
-    const logButton = document.querySelector("#logGame"); //@debug 
+    const discardLineElems = document.querySelectorAll(".discardLine");
+    const discardBoardBut = document.querySelector("#discardBoardBut");
     const resetButton = document.querySelector("#resetBut");
     const dialCloseBut = document.querySelector("#closeBut");
     
@@ -16,52 +17,31 @@ document.addEventListener("DOMContentLoaded", (event) =>{
     refreshBut.addEventListener("click", debugRenderBoard);
     drawButtons.forEach( function(e) {
         e.addEventListener("click", drawCard);
-        e.game = game;
-    })
+    });
     discardCardElems.forEach( function(e) {
         e.addEventListener("click", discardCard)
-        e.game = game
-    })
+    });
+    discardLineElems.forEach( function(e) {
+        e.addEventListener("click", discardLine);
+    });
     discardBoardBut.addEventListener("click", discardBoard);
-    discardBoardBut.game = game;
 
     resetButton.addEventListener("click", () => {
-        if (game.board.length > 0) {
-            game.discardAllCards();
-            renderBoard(game);
-        } else {
             showDialog(game.msg.resetConfirmation, {
                 msg: game.msg.reset_button,
                 cb: resetGame,
                 game: game,
             })
-        }
     })
-    resetButton.game = game;
     logButton.addEventListener("click", debugLogGame)
-    logButton.game = game;
-
-    // @Debug
-    let resetBut_data = {
-        msg: game.msg.reset_button,
-        game: game,
-        cb: resetGame,
-    };
-
-    const debugBut = document.querySelector("#debugBut")
-    debugBut.addEventListener("click", () => { 
-        showDialog("Dialog Test", resetBut_data)
-    })
-
 });
 
+// #region Kickstarting functions
 /**
  * Begins the flow to draw a card
  * @param {event} event that triggered the listener
  */
 function drawCard(event) {
-    //console.log("DEBUG | GIA | Main drawCard") //@debug
-    let game = event.currentTarget.game
     let curDeck = game.deck.cards
     if (curDeck.length > 0){
         game.drawCard(event.target.dataset.drawTo);
@@ -76,11 +56,19 @@ function drawCard(event) {
  * @param {*} event that triggered the listener
  */
 function discardCard(event) {
-    //console.log("DEBUG | GIA | Main discardCard") //@debug 
     let targetLine = event.target.closest(".line-side-wrapper").dataset.line
-    game.discardCard(targetLine);
+    if (game.board[targetLine].length > 0) game.discardCard(targetLine);
     renderBoard(game);
+}
 
+/**
+ * Begins the flow to remove all cards in a card line.
+ * @param {event} event that triggers the function
+ */
+function discardLine(event) {
+    const targetLine = event.target.closest(".line-side-wrapper").dataset.line
+    game.discardLine(targetLine);
+    renderBoard(game);    
 }
 
 /**
@@ -88,47 +76,45 @@ function discardCard(event) {
  * @param {*} event that triggers the listener
  */
 function discardBoard(event) {
-    let game = event.currentTarget.game;
     game.discardAllCards();
     renderBoard(game);
 
 }
 
 /**
- * force the rendering of the board for debug purposese
+ * returns the game to the original status and shuffles the deck
+ * @param {event} event that triggered the function
  */
-function debugRenderBoard(){
-    renderBoard(game);
-}
-
 function resetGame(event){
-    const game = event.currentTarget.game;
-   game.deck.reset();
+    game.deck.reset();
     game.board = {
         mainLine: [],
         secondaryLine: []
     };
     game.discardPile = [];
+    console.log("DEBUG | GIA | resetGame game", game) //@debug 
     renderBoard(game);
     hideDialog();
 
 }
 
+// #endregion
+
+// #region Rendering functions
 /**
  * Renders the board, ie the rows where cards are revealed
  */
 function renderBoard(game){
-    //console.log("DEBUG | GIA | this is renderBoard") //@debug 
     const lines = Object.keys(game.board);
 
     for (let curLine of lines ) {
         let lineId = Helpers.convertLineToHtmlId(curLine);
-        const board_elem = document.querySelector(lineId);
+        const line_elem = document.querySelector(lineId);
         let newSlot;
 
         //Remove line elements
-        while (board_elem.firstChild) {
-            board_elem.removeChild(board_elem.firstChild);
+        while (line_elem.firstChild) {
+            line_elem.removeChild(line_elem.firstChild);
         }
 
         if (!game.board[curLine].length) continue
@@ -140,11 +126,11 @@ function renderBoard(game){
             newSlot.classList.add("slot", "card-front", curCard.colorClass);
             newSlot.innerHTML = curCard.appearence;
             newSlot.setAttribute("title", `${curCard.value} of ${curCard.suit}`);
-            board_elem.appendChild(newSlot);
+            line_elem.appendChild(newSlot);
         }
-        renderDiscardPile(game);
-        game.logMe();
-    }  
+        //game.logMe();
+    }
+    renderDiscardPile(game);
 }
 /**
  * renders the card on top of the discard pile
@@ -153,7 +139,7 @@ function renderBoard(game){
 function renderDiscardPile(game) {
     let discardPileElem = document.querySelector("#resetBut");
     let topCard; //the card that goes on top of the discarpile
-
+    console.log("DEBUG | GIA | renderDiscardPile len", game.discardPile.length) //@debug 
     if (game.discardPile.length > 0) {
         topCard = game.discardPile[game.discardPile.length - 1];
     } else {
@@ -186,14 +172,27 @@ function hideDialog(){
     if (dialog.contains(butt_1)) dialog.removeChild(butt_1)
 }
 
-function debugLogGame(event){
-    let game = event.currentTarget.game;
-    game.logMe();
-}
 
+// #endregion
+
+// #region Debug Functions
 /**
  * Merely used for testing events or other process
  */
 function testIt(){
     console.log("test it")
 }
+
+/**
+ * force the rendering of the board for debug purposese
+ */
+function debugRenderBoard(){
+    console.log("DEBUG | GIA | debugRenderBoard game.", game) //@debug 
+    renderBoard(game);
+}
+
+function debugLogGame(event){
+    game.logMe();
+}
+
+// #endregion

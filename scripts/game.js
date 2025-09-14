@@ -36,8 +36,16 @@ class Game {
         //console.log("GIA: this is game.discardCard");
         let targetCard = this.board[targetLine].pop();
         this.discardPile.push(targetCard);
-        renderBoard(game);
+    }
 
+    /**
+     * Discards all cards from a card line.
+     * @param {string} targetLine matching the name of a board line.
+     */
+    discardLine(targetLine){
+        for (let card = 0; card = this.board[targetLine].length; card++) {
+            this.discardCard(targetLine);
+        };
     }
 
     /**
@@ -45,22 +53,20 @@ class Game {
      */
     discardAllCards(){
         //console.log("GIA: this is game.discardAllCards");
-
         const lines = Object.keys(this.board);
-
         for (let curLine of lines) {
-            for ( let card = 0; card = this.board[curLine].length; card++ ){
-                this.discardCard(curLine);
-            }
+            this.discardLine(curLine);
         }
-
     }
 
+    /**
+     * logs the current status of the game. For debug.
+     */
     logMe(){
-        console.log("DEBUG | GAME STATUS | ") //@debug 
+        console.log("DEBUG | GAME STATUS | ") 
         console.log("game deck cards:", this.deck.cards);
         console.log("game.board:", this.board);
-        console.log("game.discard:", this.discardPile);
+        console.log("game.discardPile:", this.discardPile);
     }
 
 }
