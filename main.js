@@ -676,17 +676,34 @@ function renderBoard(game){
 
         //Add line elements
         for (let card = 0; card < game.board[curLine].length; card++) {
-            curCard = game.board[curLine][card]
-            console.log("DEBUG | GIA | card", curCard) //@debug 
+            curCard = game.board[curLine][card] 
             newSlot = document.createElement("div");
             newSlot.classList.add("slot", "card-front", curCard.colorClass);
             newSlot.innerHTML = curCard.appearence;
-            newSlot.setAttribute("title", `${curCard.value} of ${curCard.suit}`)
+            newSlot.setAttribute("title", `${curCard.value} of ${curCard.suit}`);
             board_elem.appendChild(newSlot);
         }
-
-        game.logMe()
+        renderDiscardPile(game);
+        game.logMe();
     }  
+}
+/**
+ * renders the card on top of the discard pile
+ * @param {Game Object} game 
+ */
+function renderDiscardPile(game) {
+    let discardPileElem = document.querySelector("#resetBut");
+    let topCard; //the card that goes on top of the discarpile
+
+    if (game.discardPile.length > 0) {
+        topCard = game.discardPile[game.discardPile.length - 1];
+    } else {
+        topCard = { appearence: "D", colorClass:"card-back"};
+    }
+
+    discardPileElem.innerHTML = topCard.appearence;
+    discardPileElem.classList.remove("card-back", "red-card", "black-card")
+    discardPileElem.classList.add(topCard.colorClass);
 }
 
 function showDialog(msg, button1 = false){

@@ -45,11 +45,11 @@
 
 .card-back{
     color: rgb(13, 90, 235);
-    font-size: calc(var(--side)*8/10);
+    font-size: calc(var(--side)*9/10);
 }
 
 .card-front{
-    font-size: calc(var(--side)*6/10);
+    font-size: calc(var(--side)*9/10);
 }
 
 .card-line{
@@ -68,6 +68,10 @@
     border: solid var(--debug-color);
     padding: 1rem;
     margin-top: 3rem;
+}
+
+.debug h4 {
+    margin: 0;
 }
 
 .in-dialog{
