@@ -39,13 +39,16 @@
     margin-top: calc(var(--side)/3);
 }
 
+.black-card{
+    color: black;
+}
+
 .card-back{
     color: rgb(13, 90, 235);
     font-size: calc(var(--side)*8/10);
 }
 
 .card-front{
-    color: var(--debug-color);
     font-size: calc(var(--side)*6/10);
 }
 
@@ -73,6 +76,10 @@
 
 .line-side-wrapper {
     padding: 0.5rem 0;
+}
+
+.red-card {
+    color: red;
 }
 
 .slot {

@@ -103,7 +103,7 @@ function debugRenderBoard(){
 
 function resetGame(event){
     const game = event.currentTarget.game;
-    game.deck.reset();
+   game.deck.reset();
     game.board = {
         mainLine: [],
         secondaryLine: []
@@ -135,9 +135,12 @@ function renderBoard(game){
 
         //Add line elements
         for (let card = 0; card < game.board[curLine].length; card++) {
+            curCard = game.board[curLine][card]
+            console.log("DEBUG | GIA | card", curCard) //@debug 
             newSlot = document.createElement("div");
-            newSlot.classList.add("slot", "card-front");
-            newSlot.innerHTML = game.board[curLine][card];
+            newSlot.classList.add("slot", "card-front", curCard.colorClass);
+            newSlot.innerHTML = curCard.appearence;
+            newSlot.setAttribute("title", `${curCard.value} of ${curCard.suit}`)
             board_elem.appendChild(newSlot);
         }
 
