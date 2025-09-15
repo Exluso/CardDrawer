@@ -514,6 +514,25 @@ class Game {
     }
 
     /**
+     * downloads a txt file containing a JSON  string
+     * of the current game status
+     */
+    exportStatus(){
+        const gameData = JSON.stringify(this);
+        const invisHTML = document.createElement('a');
+
+        const blobContainer = new Blob([gameData], {type: "text/plain"} );
+        const blobUrl = window.URL.createObjectURL(blobContainer);
+
+        invisHTML.setAttribute("href", blobUrl);
+        invisHTML.setAttribute("download", "Card Drawer Save.txt");
+        invisHTML.click();
+
+        window.URL.revokeObjectURL(blobUrl);
+
+    }
+
+    /**
      * Import the status of a previous Game, ie loads a save file!
      * @param {game object} gameStatus previously saved
      */
@@ -523,6 +542,27 @@ class Game {
         this.board = gameStatus.board;
         this.discardPile = gameStatus.discardPile;
     }
+
+
+    //#region @overrides & Interfaces
+
+    /**
+     * Uses the game object data from the Game class to generate a JSON
+     * @returns JSON of the game object
+     */
+    toJSON(){
+        const gameJSON = {};
+        gameJSON.deck = {};
+        gameJSON.deck.cards = this.deck.cards;
+        gameJSON.board = this.board;
+        gameJSON.discardPile = this.discardPile;
+
+        return gameJSON
+    }
+
+
+    //#endregion 
+
 }
 
 class Helpers {
