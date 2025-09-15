@@ -69,4 +69,14 @@ class Game {
         console.log("game.discardPile:", this.discardPile);
     }
 
+    /**
+     * Import the status of a previous Game, ie loads a save file!
+     * @param {game object} gameStatus previously saved
+     */
+    importStatus(gameStatus){
+        console.log("DEBUG | GIA | Game.ImportStatus")
+        this.deck.cards = gameStatus.deck.cards;
+        this.board = gameStatus.board;
+        this.discardPile = gameStatus.discardPile;
+    }
 }

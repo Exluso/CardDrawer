@@ -96,3 +96,9 @@
     margin: 0.5rem;
     text-align: center;
 }
+
+.versionMark {
+    float: right;
+    font-size: 0.7rem;
+    color: grey;
+}

@@ -513,6 +513,16 @@ class Game {
         console.log("game.discardPile:", this.discardPile);
     }
 
+    /**
+     * Import the status of a previous Game, ie loads a save file!
+     * @param {game object} gameStatus previously saved
+     */
+    importStatus(gameStatus){
+        console.log("DEBUG | GIA | Game.ImportStatus")
+        this.deck.cards = gameStatus.deck.cards;
+        this.board = gameStatus.board;
+        this.discardPile = gameStatus.discardPile;
+    }
 }
 
 class Helpers {
@@ -638,7 +648,6 @@ function resetGame(event){
         secondaryLine: []
     };
     game.discardPile = [];
-    console.log("DEBUG | GIA | resetGame game", game) //@debug 
     renderBoard(game);
     hideDialog();
 
@@ -685,7 +694,6 @@ function renderBoard(game){
 function renderDiscardPile(game) {
     let discardPileElem = document.querySelector("#resetBut");
     let topCard; //the card that goes on top of the discarpile
-    console.log("DEBUG | GIA | renderDiscardPile len", game.discardPile.length) //@debug 
     if (game.discardPile.length > 0) {
         topCard = game.discardPile[game.discardPile.length - 1];
     } else {
@@ -733,7 +741,6 @@ function testIt(){
  * force the rendering of the board for debug purposese
  */
 function debugRenderBoard(){
-    console.log("DEBUG | GIA | debugRenderBoard game.", game) //@debug 
     renderBoard(game);
 }
 
