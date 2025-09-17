@@ -21,7 +21,6 @@
                 <button class="clickable drawButton" data-draw-to="secondaryLine">Draw follow up</button>
                 <button class="clickable discardCard">Discard last</button>
                 <button class="clickable discardLine">Discard line</button>
-                <button id="discardBoardBut">Discard board</button>
             </div>
             <div id="secondary-line" class="card-line"> </div>
             <div class="line-side-wrapper" data-line="secondaryLine">
@@ -30,10 +29,14 @@
             </div>
 
         </div>
-        <div class="third">
+        <div class="third card-line">
             <div class="board-bottom"> 
                 <div class="slot card-back clickable drawButton" id="drawBut" title="Draw a card" data-draw-to="mainLine">&#x1F0A0;</div>
                 <div class="slot card-front card-back clickable" id="resetBut" title="Shuffle the deck" >D</div>
+            </div>
+            <div class="line-side-wrapper">
+                <button id="discardBoardBut" class="clickable">Discard board</button>
+                <button id="exportStatus" class="clickable">Download status data</button>
             </div>
         </div>
         <div>

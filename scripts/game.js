@@ -70,25 +70,6 @@ class Game {
     }
 
     /**
-     * downloads a txt file containing a JSON  string
-     * of the current game status
-     */
-    exportStatus(){
-        const gameData = JSON.stringify(this);
-        const invisHTML = document.createElement('a');
-
-        const blobContainer = new Blob([gameData], {type: "text/plain"} );
-        const blobUrl = window.URL.createObjectURL(blobContainer);
-
-        invisHTML.setAttribute("href", blobUrl);
-        invisHTML.setAttribute("download", "Card Drawer Save.txt");
-        invisHTML.click();
-
-        window.URL.revokeObjectURL(blobUrl);
-
-    }
-
-    /**
      * Import the status of a previous Game, ie loads a save file!
      * @param {game object} gameStatus previously saved
      */
@@ -115,7 +96,6 @@ class Game {
 
         return gameJSON
     }
-
 
     //#endregion 
 

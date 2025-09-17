@@ -514,25 +514,6 @@ class Game {
     }
 
     /**
-     * downloads a txt file containing a JSON  string
-     * of the current game status
-     */
-    exportStatus(){
-        const gameData = JSON.stringify(this);
-        const invisHTML = document.createElement('a');
-
-        const blobContainer = new Blob([gameData], {type: "text/plain"} );
-        const blobUrl = window.URL.createObjectURL(blobContainer);
-
-        invisHTML.setAttribute("href", blobUrl);
-        invisHTML.setAttribute("download", "Card Drawer Save.txt");
-        invisHTML.click();
-
-        window.URL.revokeObjectURL(blobUrl);
-
-    }
-
-    /**
      * Import the status of a previous Game, ie loads a save file!
      * @param {game object} gameStatus previously saved
      */
@@ -559,7 +540,6 @@ class Game {
 
         return gameJSON
     }
-
 
     //#endregion 
 
@@ -601,11 +581,12 @@ document.addEventListener("DOMContentLoaded", (event) =>{
     window.game = game; //makes it accessible from the console! :O
 
     const refreshBut = document.querySelector("#refresh"); //debug box
-     const logButton = document.querySelector("#logGame"); //debug box 
+    const logButton = document.querySelector("#logGame"); //debug box 
     const drawButtons = document.querySelectorAll(".drawButton");
     const discardCardElems = document.querySelectorAll(".discardCard");
     const discardLineElems = document.querySelectorAll(".discardLine");
     const discardBoardBut = document.querySelector("#discardBoardBut");
+    const downloadBut = document.querySelector("#exportStatus");
     const resetButton = document.querySelector("#resetBut");
     const dialCloseBut = document.querySelector("#closeBut");
     
@@ -621,7 +602,7 @@ document.addEventListener("DOMContentLoaded", (event) =>{
         e.addEventListener("click", discardLine);
     });
     discardBoardBut.addEventListener("click", discardBoard);
-
+    downloadBut.addEventListener("click", () => exportStatus(game));
     resetButton.addEventListener("click", () => {
             showDialog(game.msg.resetConfirmation, {
                 msg: game.msg.reset_button,
@@ -632,7 +613,7 @@ document.addEventListener("DOMContentLoaded", (event) =>{
     logButton.addEventListener("click", debugLogGame)
 });
 
-// #region Kickstarting functions
+// #region UI functions
 /**
  * Begins the flow to draw a card
  * @param {event} event that triggered the listener
@@ -690,6 +671,26 @@ function resetGame(event){
     game.discardPile = [];
     renderBoard(game);
     hideDialog();
+
+}
+
+/**
+ * Downloads a .txt file containing a JSON string containing
+ * the current game object status.
+ * @param {Game class instance} game the current game
+ */
+function exportStatus(game){
+    const gameData = JSON.stringify(game);
+    const invisHTML = document.createElement('a');
+
+    const blobContainer = new Blob([gameData], {type: "text/plain"} );
+    const blobUrl = window.URL.createObjectURL(blobContainer);
+
+    invisHTML.setAttribute("href", blobUrl);
+    invisHTML.setAttribute("download", "Card Drawer Save.txt");
+    invisHTML.click();
+
+    window.URL.revokeObjectURL(blobUrl);
 
 }
 
