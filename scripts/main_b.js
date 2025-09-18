@@ -11,6 +11,8 @@ document.addEventListener("DOMContentLoaded", (event) =>{
     const discardLineElems = document.querySelectorAll(".discardLine");
     const discardBoardBut = document.querySelector("#discardBoardBut");
     const downloadBut = document.querySelector("#exportStatus");
+    const loadStatusFileBut =  document.querySelector("#loadGameStatusFile");
+    const invisfileSelector = document.querySelector("#fileSelector");
     const resetButton = document.querySelector("#resetBut");
     const dialCloseBut = document.querySelector("#closeBut");
     
@@ -27,6 +29,8 @@ document.addEventListener("DOMContentLoaded", (event) =>{
     });
     discardBoardBut.addEventListener("click", discardBoard);
     downloadBut.addEventListener("click", () => exportStatus(game));
+    loadStatusFileBut.addEventListener("click", () => document.querySelector("#fileSelector").click());
+    invisfileSelector.addEventListener("change", () => importStatusFile(game));
     resetButton.addEventListener("click", () => {
             showDialog(game.msg.resetConfirmation, {
                 msg: game.msg.reset_button,
@@ -118,6 +122,29 @@ function exportStatus(game){
 
 }
 
+/**
+ * Imports a txt file with a game object in a specific status.
+ * @param {Game class} game the current game instance (not the one being imported!)
+ */
+function importStatusFile(game){
+    const fileToImport = document.querySelector("#fileSelector").files[0];
+    if (fileToImport == "") return;
+
+    const reader = new FileReader();
+    let gameObjToImport;
+
+    reader.onload  = (e) => { 
+        const status = reader.result
+        gameObjToImport = JSON.parse(reader.result);
+        game.importStatus(gameObjToImport);
+        renderBoard(game);
+    }
+    
+    reader.readAsText(fileToImport);
+    document.querySelector.value=""
+
+}
+
 // #endregion
 
 // #region Rendering functions
@@ -151,6 +178,9 @@ function renderBoard(game){
         //game.logMe();
     }
     renderDiscardPile(game);
+
+    //reset the fileSelector in case there is any value.
+    document.querySelector("fileSelector").value = "";
 }
 /**
  * renders the card on top of the discard pile

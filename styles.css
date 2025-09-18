@@ -78,6 +78,10 @@
     padding: 0.5rem;
 }
 
+.invisible{
+    display: none;
+}
+
 .line-side-wrapper {
     padding: 0.5rem 0;
     max-width: 80px;
