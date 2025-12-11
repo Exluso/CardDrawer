@@ -1,0 +1,39 @@
+    "todohighlight.keywords": [
+    "@WiP",
+    "@ToDo",
+    "@Clear",
+    {
+        "text": "@DEVNOTE",
+        "color": "white",
+        "backgroundColor": "red",
+        "overviewRulerColor": "grey"
+    },
+    {
+        "text": "<--@Debug",
+        "color": "violet",
+        "backgroundColor": "transparent",
+        "overviewRulerColor": "grey"
+    },
+    {
+        "text": "@placeholder",
+        "color": "white",
+        "backgroundColor": "transparent",
+        "overviewRulerColor": "grey"
+    },
+    {
+        "text": "@bug",
+        "color": "red",
+        "backgroundColor": "yellow",
+        "overviewRulerColor": "red",
+        "font-weight": "bold"
+    },
+    {
+        "text": "#region",
+        "color": "cyan",
+        "backgroundColor": "transparent",
+        "overviewRulerColor": "cyan",
+    },
+    ],
+
+    //copypaste in F1 user setting json
+    //Remove once done

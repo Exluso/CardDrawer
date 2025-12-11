@@ -5,11 +5,14 @@ document.addEventListener("DOMContentLoaded", (event) =>{
     window.game = game; //makes it accessible from the console! :O
 
     const refreshBut = document.querySelector("#refresh"); //debug box
-     const logButton = document.querySelector("#logGame"); //debug box 
+    const logButton = document.querySelector("#logGame"); //debug box 
     const drawButtons = document.querySelectorAll(".drawButton");
     const discardCardElems = document.querySelectorAll(".discardCard");
     const discardLineElems = document.querySelectorAll(".discardLine");
     const discardBoardBut = document.querySelector("#discardBoardBut");
+    const downloadBut = document.querySelector("#exportStatus");
+    const loadStatusFileBut =  document.querySelector("#loadGameStatusFile");
+    const invisfileSelector = document.querySelector("#fileSelector");
     const resetButton = document.querySelector("#resetBut");
     const dialCloseBut = document.querySelector("#closeBut");
     
@@ -25,7 +28,9 @@ document.addEventListener("DOMContentLoaded", (event) =>{
         e.addEventListener("click", discardLine);
     });
     discardBoardBut.addEventListener("click", discardBoard);
-
+    downloadBut.addEventListener("click", () => exportStatus(game));
+    loadStatusFileBut.addEventListener("click", () => document.querySelector("#fileSelector").click());
+    invisfileSelector.addEventListener("change", () => importStatusFile(game));
     resetButton.addEventListener("click", () => {
             showDialog(game.msg.resetConfirmation, {
                 msg: game.msg.reset_button,
@@ -36,7 +41,7 @@ document.addEventListener("DOMContentLoaded", (event) =>{
     logButton.addEventListener("click", debugLogGame)
 });
 
-// #region Kickstarting functions
+// #region UI functions
 /**
  * Begins the flow to draw a card
  * @param {event} event that triggered the listener
@@ -97,6 +102,49 @@ function resetGame(event){
 
 }
 
+/**
+ * Downloads a .txt file containing a JSON string containing
+ * the current game object status.
+ * @param {Game class instance} game the current game
+ */
+function exportStatus(game){
+    const gameData = JSON.stringify(game);
+    const invisHTML = document.createElement('a');
+
+    const blobContainer = new Blob([gameData], {type: "text/plain"} );
+    const blobUrl = window.URL.createObjectURL(blobContainer);
+
+    invisHTML.setAttribute("href", blobUrl);
+    invisHTML.setAttribute("download", "Card Drawer Save.txt");
+    invisHTML.click();
+
+    window.URL.revokeObjectURL(blobUrl);
+
+}
+
+/**
+ * Imports a txt file with a game object in a specific status.
+ * @param {Game class} game the current game instance (not the one being imported!)
+ */
+function importStatusFile(game){
+    const fileToImport = document.querySelector("#fileSelector").files[0];
+    if (fileToImport == "") return;
+
+    const reader = new FileReader();
+    let gameObjToImport;
+
+    reader.onload  = (e) => { 
+        const status = reader.result
+        gameObjToImport = JSON.parse(reader.result);
+        game.importStatus(gameObjToImport);
+        renderBoard(game);
+    }
+    
+    reader.readAsText(fileToImport);
+    document.querySelector.value=""
+
+}
+
 // #endregion
 
 // #region Rendering functions
@@ -130,6 +178,9 @@ function renderBoard(game){
         //game.logMe();
     }
     renderDiscardPile(game);
+
+    //reset the fileSelector in case there is any value.
+    document.querySelector("fileSelector").value = "";
 }
 /**
  * renders the card on top of the discard pile

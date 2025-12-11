@@ -79,4 +79,24 @@ class Game {
         this.board = gameStatus.board;
         this.discardPile = gameStatus.discardPile;
     }
+
+
+    //#region @overrides & Interfaces
+
+    /**
+     * Uses the game object data from the Game class to generate a JSON
+     * @returns JSON of the game object
+     */
+    toJSON(){
+        const gameJSON = {};
+        gameJSON.deck = {};
+        gameJSON.deck.cards = this.deck.cards;
+        gameJSON.board = this.board;
+        gameJSON.discardPile = this.discardPile;
+
+        return gameJSON
+    }
+
+    //#endregion 
+
 }
