@@ -179,6 +179,9 @@ function hideDialog(){
  */
 function testIt(){
     console.log("test it")
+    debugElem = document.querySelector(".debug")
+    console.log("DEBUG | GIA | debugelem",debugElem) //@debug 
+    debugElem.innerHTML= a;
 }
 
 /**
